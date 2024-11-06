@@ -14,7 +14,18 @@ public class PlayerController : MonoBehaviour
     [Header("Camera Settings")]
     public Camera firstPersonCamera;        //1인칭 카메라 
     public Camera thirdPersonCamera;        //3인칭 카메라 
-    public float mouseSenesitivity = 2.0f;  //마우스 감도
+
+    public float mouseSenesitivity = 200.0f;  //마우스 감도
+
+    public float cameraDistance = 5.0f;
+    public float minDistance = 1.0f;
+    public float maxDistance = 10.0f;
+
+    private float currentX = 0.0f;             //수명 회전 각도
+    private float currentY = 45.0f;            //수직 회전 각도
+
+    private const float Y_ANGLE_MIN = 0.0f;
+    private const float Y_ANGLE_MAX = 50.0f;
 
     public float radius = 5.0f;                 //3인칭 카메라와 플레이어 간의 거리
     public float minRadius = 1.0f;              //카메라 최소 거리
