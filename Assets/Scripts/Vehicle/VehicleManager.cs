@@ -7,10 +7,11 @@ public class VehicleManager : MonoBehaviour
 
     public Vehicle[] vehicles;          //탈것 객체 배열 선언한다.
 
-    public Car car;
-    public Bicycle bicycle;
+    public Car car;                 //자동차 선언
+    public Bicycle bicycle;         //자전거 선언
 
-    float Timer;
+    float Timer;                //간단한 시간 float 변수 선언
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,20 +22,24 @@ public class VehicleManager : MonoBehaviour
     void Update()
     {
 
-        for(int i = 0; i < vehicles.Length; i ++)
+        for(int i = 0; i < vehicles.Length; i ++)  //배열에 있는 탈것들을 움직인다.
         {
             vehicles[i].Move();
         }
-        car.Move();
+        car.Move();              //이동 함수 호출
         bicycle.Move();
 
-        Timer -= Time.deltaTime;
+        Timer -= Time.deltaTime;    //시간울 줄인다.
 
-        if(Timer<0)         //1초마다 호출되게 한다 
+        if(Timer<0)         //1초마다 호출되게 한다.
         {
-            car.Horn();     // 경적 함수 호출
-            bicycle.Horn();
-            Timer = 1;
+            for (int i = 0;i < vehicles.Length;i --)
+            {
+                vehicles[i].Horn();
+            }
+          //car.Horn();     // 경적 함수 호출
+          //bicycle.Horn();
+          Timer = 1;
         }
     }
 }

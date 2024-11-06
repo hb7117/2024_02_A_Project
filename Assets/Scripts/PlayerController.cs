@@ -30,14 +30,8 @@ public class PlayerController : MonoBehaviour
 
     //내부 변수들 
     public bool isFirstPerson = true;      //1인칭 모드 인지 여부 
-    //private bool isGrounded;                //플레이어가 땅에 있는지 여부
+    private bool isGrounded;                //플레이어가 땅에 있는지 여부
     private Rigidbody rb;                   //플레이어의 Rigidbody
-
-    public float fallingThreshold = -0.1f;              //떨어지는것으로 간주할 수직 속도 임계값
-
-    [Header("Ground Check Setting")]
-    public float groundCheckDistance = 0.3f;
-    public float slopedLimit = 45f;                     //등반 가능한 최대 경사 각도 
 
     void Start()
     {
@@ -47,6 +41,12 @@ public class PlayerController : MonoBehaviour
         SetupCameras();
         SetActiveCamera();
     }
+
+    public float fallingThreshold = -0.1f;              //떨어지는것으로 간주할 수직 속도 임계값
+
+    [Header("Ground Check Setting")]
+    public float groundCheckDistance = 0.3f;
+    public float slopedLimit = 45f;                     //등반 가능한 최대 경사 각도 
 
     void Update()
     {
@@ -62,6 +62,14 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         HandleMovement();
+    }
+
+    void Update()
+    {
+        HandleMovement();
+        HandleRotation();
+        HandleJump();
+        HandleCameraToggle();
     }
 
     //활성화할 카메라를 설정하는 함수
@@ -145,7 +153,19 @@ public class PlayerController : MonoBehaviour
         float moveHorizontal = Input.GetAxis("Horizontal");             //좌우 입력 (-1 ~ 1)
         float moveVertical = Input.GetAxis("Vertical");                 //앞뒤 입력 (1 ~ -1)
 
+        //캐릭터 기준으로 이동
+        Vector3 movement = transform.forward * moveHorizontal + transform.forward * moveVertical;
+        rb.MovePosition(rb.position + movement * moveSpeed * Time.deltaTime);         //물리 기반 이동
+
+    void Update()
+    { 
+        HandleMovement();
+        HandleRotation();
+        HandleJump();
+    }
+
         Vector3 movement;
+
         if (!isFirstPerson)//3인칭 모드일때 ,카메라 방향으로 이동 처리 
         {
             Vector3 cameraForward = thirdPersonCamera.transform.forward;    //카메라 앞 방향
@@ -155,6 +175,9 @@ public class PlayerController : MonoBehaviour
             Vector3 cameraRight = thirdPersonCamera.transform.right;        //카메라 오른쪽 방향
             cameraRight.y = 0.0f;
             cameraRight.Normalize();
+
+            //Vector3 movement = cameraRight * moveHorizontal + cameraForward * moveVertical;
+            //rb.MovePosition(rb.position + movement* moveSpeed * Time.deltaTime);          //물리 기반 이동
 
             movement = cameraRight * moveHorizontal + cameraForward * moveVertical;
         }

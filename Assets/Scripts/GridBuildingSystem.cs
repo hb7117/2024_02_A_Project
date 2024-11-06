@@ -22,6 +22,7 @@ public class GridBuildingSystem : MonoBehaviour
     [SerializeField] private int height = 10;                       //그리드의 세로 크기
     [SerializeField] private float cellSize = 1.0f;                 //각 셀의 크기 
     [SerializeField] private GameObject cellPrefabs;                //셀 프리팹
+
     [SerializeField] private GameObject builingPrefabs;                //빌딩 프리팹
 
     [SerializeField] private PlayerController playerController;     //플레이어 컨트롤러 참조
@@ -134,6 +135,10 @@ public class GridBuildingSystem : MonoBehaviour
             gridPosition.z >= 0 && gridPosition.z < height;
     }
 
+    void Update()
+    {
+        Vector3 lookPosition = GetLookPosition();
+    }
 
     //플레이어가 보고 있는 위치를 계산하는 메서드
     private Vector3 GetLookPosition()
