@@ -33,7 +33,7 @@ public class PlayerAnimationManger : MonoBehaviour
     {
         UpdateAnimationState();
     }
-    private void UpdateAnimation()
+    private void UpdateAnimationState()
     {
         //모든 bool 파라미터를 초기화
         ResetAllBoolParameters();

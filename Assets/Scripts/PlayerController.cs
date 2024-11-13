@@ -41,7 +41,6 @@ public class PlayerController : MonoBehaviour
 
     //내부 변수들 
     public bool isFirstPerson = true;      //1인칭 모드 인지 여부 
-    private bool isGrounded;                //플레이어가 땅에 있는지 여부
     private Rigidbody rb;                   //플레이어의 Rigidbody
 
     void Start()
@@ -61,7 +60,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        HandleMovement();
         HandleRotation();
+        //HandleJump();
         HandleCameraToggle();
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -73,14 +74,6 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         HandleMovement();
-    }
-
-    void Update()
-    {
-        HandleMovement();
-        HandleRotation();
-        HandleJump();
-        HandleCameraToggle();
     }
 
     //활성화할 카메라를 설정하는 함수
@@ -168,15 +161,6 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = transform.forward * moveHorizontal + transform.forward * moveVertical;
         rb.MovePosition(rb.position + movement * moveSpeed * Time.deltaTime);         //물리 기반 이동
 
-    void Update()
-    { 
-        HandleMovement();
-        HandleRotation();
-        HandleJump();
-    }
-
-        Vector3 movement;
-
         if (!isFirstPerson)//3인칭 모드일때 ,카메라 방향으로 이동 처리 
         {
             Vector3 cameraForward = thirdPersonCamera.transform.forward;    //카메라 앞 방향
@@ -207,7 +191,7 @@ public class PlayerController : MonoBehaviour
         rb.MovePosition(rb.position + movement * moveSpeed * Time.deltaTime);
     }
 
-    public bool isGrounded()        //땅 체크 확인
+    public bool isGrounded()
     {
         return Physics.Raycast(transform.position, Vector3.down, 2.0f);
     }

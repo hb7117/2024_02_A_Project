@@ -135,11 +135,6 @@ public class GridBuildingSystem : MonoBehaviour
             gridPosition.z >= 0 && gridPosition.z < height;
     }
 
-    void Update()
-    {
-        Vector3 lookPosition = GetLookPosition();
-    }
-
     //플레이어가 보고 있는 위치를 계산하는 메서드
     private Vector3 GetLookPosition()
     {
