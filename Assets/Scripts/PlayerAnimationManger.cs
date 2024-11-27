@@ -14,6 +14,11 @@ public class PlayerAnimationManger : MonoBehaviour
     private const string PARAM_IS_FALLING = "IsFalling";
     private const string PARAM_IS_ATTACK_TRIGGER = "Attack";
 
+    public void Update()
+    {
+        UpdateAnimationState();
+    }
+
     //공격 애니메이션 트리거
     public void TriggerAttack()
     {
@@ -29,10 +34,7 @@ public class PlayerAnimationManger : MonoBehaviour
         animator.SetBool(PARAM_IS_FALLING, false);
     }
 
-    public void Update()
-    {
-        UpdateAnimationState();
-    }
+ 
     private void UpdateAnimationState()
     {
         //모든 bool 파라미터를 초기화
